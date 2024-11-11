@@ -1,0 +1,117 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{comment}
+\usepackage{enumitem}
+\usepackage[top=2cm,bottom=2cm,left=3cm,right=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage{xspace}
+
+%%% TIKZ
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes}
+
+%%% STYLE
+\renewcommand{\familydefault}{\sfdefault}
+\setlength\parindent{0pt}
+
+%%% ENVIRONMENTS
+
+% Question environment
+\newtheoremstyle{que}% name
+  {}% Space above, empty = `usual value'
+  {}% Space below
+  {}% Body font
+  {}% Indent amount (empty = no indent, \parindent = para indent)
+  {\bfseries}% Thm head font
+  {}% Punctuation after thm head
+  {\newline}% Space after thm head: \newline = linebreak
+  {\thmname{#1}\thmnumber{ #2}:\thmnote{ #3}\vspace{\medskipamount}}% Thm head spec
+\theoremstyle{que}
+\newtheorem{question}{Question}
+
+%%% MACROS
+
+% Use to fix offset if an environment starts with an enumerate
+\newcommand{\fixoffset}{\mbox{}\vspace*{-\bigskipamount}\vspace*{-\medskipamount}}
+\newcommand{\eg}{{\em e.g.}\xspace}
+\newcommand{\ie}{{\em i.e.}\xspace}
+\mathchardef\mhyphen="2D
+\newcommand\points[1]{%
+\ifnum1<0#1\relax%
+    {\bf \small [#1~marks]}%
+  \else%
+    {\bf \small [#1~mark]}%
+  \fi%
+}%
+
+\newcommand{\module}{COMP0143: Cryptocurrencies}
+\newcommand{\university}{University College London}
+\newcommand{\assessment}{Coursework}
+\newcommand{\releaseDate}{November 8, 2024}
+\newcommand{\dueDate}{December 11, 2024 at 16:00 UK time}
+\newcommand{\feedbackDate}{TBD}
+\newcommand{\weight}{40\%}
+\newcommand{\pointsTotal}{100 marks}
+
+\begin{document}
+
+\title{\module\\[0.25cm]\assessment}
+\author{\university}
+\date{Released: \releaseDate\\[0.25cm]Due: \dueDate}
+\maketitle
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{question}[\points{25}]
+  \fixoffset
+  \begin{enumerate}[label=(\alph*)]
+    \item Add your answers here.
+    \item ...
+  \end{enumerate}
+\end{question}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{question}[\points{25}]
+  \fixoffset
+  \begin{enumerate}[label=(\alph*)]
+    \item Add your answers here.
+    \item ...
+  \end{enumerate}
+\end{question}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{question}[\points{30}]
+  \fixoffset
+  \begin{enumerate}[label=(\alph*)]
+    \item Add your answers here.
+    \item ...
+  \end{enumerate}
+\end{question}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{question}[\points{20}]
+  As your solution, please submit the completed {\tt TicTacToe.sol} file.
+\end{question}
+
+\newpage
+
+\end{document}
