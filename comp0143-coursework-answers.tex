@@ -75,7 +75,34 @@
 \begin{question}[\points{25}]
   \fixoffset
   \begin{enumerate}[label=(\alph*)]
-    \item Add your answers here.
+    \item 
+    \item[(i)] To compute \( C \), we first hash our leaves, the elements of \( S \), to get \( H_1, \ldots, H_9 \). We can then compute the internal nodes \( H_{10}, H_{11}, H_{12} \) as follows:
+\[
+H_{10} = \text{H}(H_1 || H_2 || H_3)
+\]
+\[
+H_{11} = \text{H}(H_4 || H_5 || H_6)
+\]
+\[
+H_{12} = \text{H}(H_7 || H_8 || H_9)
+\]
+Finally, \( C \) can be calculated as:
+\[
+C = H_{13} = \text{H}(H_{10} || H_{11} || H_{12})
+\]
+A figure \ref{fig:merkle_tree} shows the full Merkle Tree.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Merkle Tree example.drawio.png} % Adjust the width as needed
+    \caption{Merkle Tree Structure}
+    \label{fig:merkle_tree}
+To prove \( t_4 \) is in \( S \) we can compute the Merkle Proof as follows:
+\[
+C = \text{H}(H_{10}||\text{H}(\text{H}(t_4)||H_5||H_6)||H_{12})
+\]
+
+\end{figure}
+    \item[(ii)] 
     \item ...
   \end{enumerate}
 \end{question}
