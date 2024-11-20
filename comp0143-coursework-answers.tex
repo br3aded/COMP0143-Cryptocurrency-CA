@@ -10,6 +10,8 @@
 \usepackage{listings}
 \usepackage{tikz}
 \usepackage{url}
+\usepackage{lineno}
+\linenumbers
 \usepackage{xspace}
 \usepackage{biblatex} % Added for citations
 \addbibresource{citations.bib} % Path to your citations.bib file
@@ -163,8 +165,54 @@ C = \text{H}(H_{10}||\text{H}(\text{H}(t_4)||H_5||H_6)||H_{12})
 \begin{question}[\points{30}]
   \fixoffset
   \begin{enumerate}[label=(\alph*)]
+    \item The SigScript that can be used to successful verify is
+    \begin{lstlisting}[basicstyle=\ttfamily]
+    0x626974636f696e73
+    \end{lstlisting}
+    This contains the hexadecimal format of the password for the transaction "bitcoins". When the SigScript and ScriptPubKey are executed together the contents of the stack go as follows.
+\begin{lstlisting}[basicstyle=\ttfamily, breaklines=true]
+    Operation: 626974636f696e73 added to stack
+    Stack: 626974636f696e73
+
+    Operation: OP_SHA256 , Apply SHA256 to item at top of stack
+    Stack: ff03fc3d437f6e4f4e492e52394f447cc5cdbc499d765d57e7c633457b630068
+
+    Operation: OP_SHA256 , Apply SHA256 to item at top of stack
+    Stack: ff03fc3d437f6e4f4e492e52394f447cc5cdbc499d765d57e7c633457b630068
+
+    Operation: ff03fc3d437f6e4f4e492e52394f447cc5cdbc499d765d57e7c633457b630068 added to stack
+    Stack:
+    ff03fc3d437f6e4f4e492e52394f447cc5cdbc499d765d57e7c633457b630068
+    ff03fc3d437f6e4f4e492e52394f447cc5cdbc499d765d57e7c633457b630068
+
+    Operation: OP_EQUAL , check if top two items in stack equal , return result to stack
+    Stack: 1
+
+    Transaction is valid
+\end{lstlisting}
+    \item If Alice is using an 8-digit pin to protect here crypto wallet this means there are \( 10^8\) possible combinations. If there is weak security on the wallet such as no lock out on a number of attempts an attacker could brute force the pin in a reasonable amount of time. Once an attacker has access Alice's wallet they then have access to her private key. Once posted on the blockchain the UTXOs can then be signed and sent using this private key to the attackers wallet.
+    \item Using a diceware generated passphrase of 10 words could be effective with the given ScriptPubKey as the passphrase provided 128 bit security \cite{antonov2020security} meaning that brute force attacks won't be as effective. This increases the security over the passphrase "bitcoins".However , a passphrase of that length will be hard to memories which would require for it to be stored somewhere adding another potential area of vulnerability. Another downside is that an attacker has a full list of the words that could be used to generate the passphrase creating a finite search space. If the passphrase is exposed there isn't any extra factors of authentication, such as multi signature, could prevent an attacker from stealing Alice's UTXOs. Additionally if the passphrase is lost Alice cannot recover her funds. SHA-256 is an effective hashing algorithm and considered secure today because it its collision resistant properties \cite{gilbert2003security} making it ideal to secure Alice's transactions. To increase security a double hash could be used to increase search times for an attacker. This also future proofs the wallet against the ever increasing power of current machines. While Diceware passphrases offer good security by strong bit security of passphrase it still has many risks. Lots of extra measures must be taken by Alice to secure the passphrase. This is why an alternative script with extra hashing or multi signature schemes may provide stronger security.
     \item...
-    \item ...
+    \item Multi Signature wallets are a method to secure funds by requiring n of m private keys to authorize and access transactions. Alice's friends suggests a 2 of 3 multi sig wallet this would require 2 out of 3 provided private keys to carry out transactions within her wallet \cite{coinbase_multisig_wallet}. This is an effective method of security as it provides better resistance against attacks such as brute force or phishing attacks as when one key becomes compromised the funds are still secure by the protection of the other keys. For the multi sig wallet to be secure Alice must ensure that each key is stored in distinct places this being with individual people or services ensuring the protection of other keys if one is compromised. While multi sig wallets are generally used for wallets with large amounts of funds it could be appropriate for Alice as she is using it to store funds while traveling.
+    
+    A PubKeyScript for a multi signature wallet would look like this:
+    \begin{lstlisting}[basicstyle=\ttfamily, breaklines=true]
+    OP_2 
+    <Pub key 1>
+    <Pub key 2>
+    <Pub key 3>
+    OP_3
+    OP_CHECKMULTISIG
+    \end{lstlisting}
+    This specifies 2 out of 3 signatures and the uses the OP code CHECKMULTISIG function to verify if signatures are valid for given public keys.
+
+    A ScriptSig for a multi signature wallet would look like this:
+    \begin{lstlisting}[basicstyle=\ttfamily, breaklines=true]
+    0
+    <Signature 1>
+    <Signature 2>
+    \end{lstlisting}
+    This specifies the signatures that are being used to attempt to access the transaction. The 0 is used to signal the start of the multi sig verification process.
   \end{enumerate}
 \end{question}
 
